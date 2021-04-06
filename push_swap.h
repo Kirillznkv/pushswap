@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 21:06:23 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/06 13:56:25 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/06 16:14:31 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "stdio.h"
 # include "stdlib.h"
+# include "unistd.h"
 /*-------------------------------structures-----------------------------------*/
 typedef struct		s_list
 {
