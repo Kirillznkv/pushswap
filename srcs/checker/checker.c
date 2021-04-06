@@ -6,11 +6,11 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 22:48:44 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/06 23:51:08 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/07 00:41:26 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../../push_swap.h"
 
 int		execute_command_part_two(t_list **tmp1, t_list **tmp2, char *b)
 {
@@ -113,7 +113,7 @@ void	checker(t_list *tmp1, t_list *tmp2)
 				buf[i--] = '\0';
 		}
 	}
-	printf("\nKO\n");
+	printf("KO\n");
 	free(buf);
 	free(tmp1);
 }
