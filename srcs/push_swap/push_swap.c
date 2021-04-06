@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 00:05:21 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/07 00:45:44 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/07 01:33:03 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void		push_swap(t_list *tmp1, t_list *tmp2, int n)
 {
 	char	*res;
 
-	res = ft_strdup("");
 	if (check_list_ps(tmp1, tmp2))
-		write(1, res, ft_strlen(res));
-	free(res);
+		write(1, "", 0);
+	else if (n == 2)
+		write(1, "sa\n", 3);
 }
