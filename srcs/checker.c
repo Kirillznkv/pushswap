@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 22:48:44 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/06 16:19:45 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/06 22:12:55 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	out(t_list *tmp)
 	printf("\n");
 }
 
-int		execute_command(t_list **tmp, char b[])
+int		execute_command(t_list **tmp, char *b)
 {
 	if (b[0] == 's' && b[1] == 'a' && b[2] == '\n')
 		swap(*tmp);
@@ -82,35 +82,49 @@ int		check_list(t_list *tmp)
 int		main(int argc, char **argv)
 {
 	t_list		*tmp;
-	char		buf[4];
+	char		*buf;
 	int			i;
+	int			fl;
 
 	if (argc > 1)
 	{
 		tmp = init(argv, argc - 1);
 		i = -1;
 		out(tmp);
+		buf = (char*)calloc(4, 1);
+		fl = 1;
 		while (read(0, &buf[++i], 1) == 1) ///// tmp1 tmp2
 		{
-			if (i > 3)
+			if (i > 3 && fl)
 			{////		\n
-				printf("Error:\nНеверная команда\n");
-				i = -1;
+				printf("Error:\nНеверная команда1\n");
+				while (i > -1)
+					buf[i--] = '\0';
+				fl = 0;
+			}
+			if (!fl && buf[i] == '\n')
+			{
+				while (i > -1)
+					buf[i--] = '\0';
+				fl = 1;
+				continue ;
 			}
 			if (buf[i] == '\n')
 			{
-				if (execute_command(&tmp, buf))
-					printf("Error:\nНеверная команда\n");
+				if (!execute_command(&tmp, buf))
+					printf("Error:\nНеверная команда2\n");
 				out(tmp);
 				if (check_list(tmp))
 				{
 					printf("OK\n");
 					exit(0);
 				}
-				i = -1;
+				while (i > -1)
+					buf[i--] = '\0';
 			}
 		}
 		printf("\nKO\n");
+		free(buf);
 		free(tmp);
 	}
 	return (0);
