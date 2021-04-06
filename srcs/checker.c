@@ -6,20 +6,31 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 22:48:44 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/06 23:17:42 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/06 23:51:08 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	out(t_list *tmp)
+int		execute_command_part_two(t_list **tmp1, t_list **tmp2, char *b)
 {
-	while (tmp)
+	if (equally_str(b, "rr\n"))
 	{
-		printf("%d ", tmp->value);
-		tmp = tmp->next;
+		rotate(tmp1);
+		rotate(tmp2);
 	}
-	printf("\n");
+	else if (equally_str(b, "rra\n"))
+		reverse_rotate(tmp1);
+	else if (equally_str(b, "rrb\n"))
+		reverse_rotate(tmp2);
+	else if (equally_str(b, "rrr\n"))
+	{
+		reverse_rotate(tmp1);
+		reverse_rotate(tmp2);
+	}
+	else
+		return (0);
+	return (1);
 }
 
 int		execute_command(t_list **tmp1, t_list **tmp2, char *b)
@@ -41,26 +52,12 @@ int		execute_command(t_list **tmp1, t_list **tmp2, char *b)
 		rotate(tmp1);
 	else if (equally_str(b, "rb\n"))
 		rotate(tmp2);
-	else if (equally_str(b, "rr\n"))
-	{
-		rotate(tmp1);
-		rotate(tmp2);
-	}
-	else if (equally_str(b, "rra\n"))
-		reverse_rotate(tmp1);
-	else if (equally_str(b, "rrb\n"))
-		reverse_rotate(tmp2);
-	else if (equally_str(b, "rrr\n"))
-	{
-		reverse_rotate(tmp1);
-		reverse_rotate(tmp2);
-	}
-	else
+	else if (!execute_command_part_two(tmp1, tmp2, b))
 		return (0);
 	return (1);
 }
 
-void		check_list(t_list *tmp1, t_list *tmp2)
+void	check_list(t_list *tmp1, t_list *tmp2)
 {
 	t_list		*beg;
 
@@ -112,10 +109,6 @@ void	checker(t_list *tmp1, t_list *tmp2)
 			if (!execute_command(&tmp1, &tmp2, buf))
 				printf("Error:\nНеверная команда\n");
 			check_list(tmp1, tmp2);
-			printf("--->a: ");
-			out(tmp1);
-			printf("--->b: ");
-			out(tmp2);
 			while (i > -1)
 				buf[i--] = '\0';
 		}
@@ -123,18 +116,4 @@ void	checker(t_list *tmp1, t_list *tmp2)
 	printf("\nKO\n");
 	free(buf);
 	free(tmp1);
-}
-
-int		main(int argc, char **argv)
-{
-	t_list		*tmp1;
-	t_list		*tmp2;
-
-	if (argc > 1)
-	{
-		tmp1 = init(argv, argc - 1);
-		tmp2 = NULL;
-		checker(tmp1, tmp2);
-	}
-	return (0);
 }

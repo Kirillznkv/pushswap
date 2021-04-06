@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 22:41:21 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/06 22:56:41 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/06 23:27:07 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,30 +41,6 @@ int					ft_atoi(char *str)
 int			ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
-}
-
-int			nicelst(char *str, int *value)
-{
-	int		i;
-	int		dig;
-
-	i = 0;
-	dig = 0;
-	while (str[i] == ' ')
-		i++;
-	while (str[i] == '+' || str[i] == '-')
-		i++;
-	while (ft_isdigit(str[i]))
-	{
-		dig++;
-		i++;
-	}
-	while (str[i] == ' ')
-		i++;
-	if (str[i] != '\0' || !dig)
-		return (0);
-	*value = ft_atoi(str);
-	return (1);
 }
 
 int			equally_str(char *s1, const char *s2)
