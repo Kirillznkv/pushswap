@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 22:41:21 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/05 22:52:03 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/06 22:56:41 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,19 @@ int			nicelst(char *str, int *value)
 		return (0);
 	*value = ft_atoi(str);
 	return (1);
+}
+
+int			equally_str(char *s1, const char *s2)
+{
+	if (s1 && s2)
+	{
+		while (*s1 == *s2 && *s1 != '\0')
+		{
+			s1++;
+			s2++;
+		}
+		if (*s1 == *s2)
+			return (1);
+	}
+	return (0);
 }

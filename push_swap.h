@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 21:06:23 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/06 16:14:31 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/06 22:53:36 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ typedef struct		s_list
 void		add_back(t_list **lst, t_list *new);
 void		add_front(t_list **lst, t_list *new);
 t_list		*lstnew(int value);
-int			lstsize(t_list *lst);
 /*-------------------------------utils----------------------------------------*/
 int			nicelst(char *str, int *value);
 t_list		*init(char **argv, int n);
+int			equally_str(char *s1, const char *s2);
 /*-------------------------------commands-------------------------------------*/
 void		swap(t_list *tmp);
 void		push(t_list **t1, t_list **t2);

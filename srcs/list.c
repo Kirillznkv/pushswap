@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 21:13:17 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/05 22:58:54 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/06 23:07:33 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ void		add_front(t_list **lst, t_list *new)
 		}
 		*lst = new;
 	}
+	else
+	{
+		new->next = NULL;
+		new->prev = NULL;
+		*lst = new;
+	}
 }
 
 t_list		*lstnew(int value)
@@ -60,17 +66,3 @@ t_list		*lstnew(int value)
 	return (lst);
 }
 
-int			lstsize(t_list *lst)
-{
-	t_list	*beg;
-	int		size;
-
-	size = 0;
-	beg = lst;
-	while (beg)
-	{
-		beg = beg->next;
-		size++;
-	}
-	return (size);
-}
