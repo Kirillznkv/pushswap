@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 00:05:21 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/08 00:21:17 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/08 00:42:48 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,20 @@ void		swap_100(t_list *tmp1, t_list *tmp2)
 			}
 			else if (last->value > tmp1->value)
 			{
-				while (tmp1->next && tmp1->value < tmp1->next->value && tmp1->value < last->value)
+				while (tmp1->next && tmp1->value < tmp1->next->value && tmp1->value < last->value && (!tmp2 || tmp1->value > tmp2->value))
 				{
 					push(&tmp2, &tmp1);
 					write(1, "pb\n", 3);
 				}
-				if (tmp1->value < last->value)
+				if (tmp1->value < last->value && (!tmp2 || tmp1->value > tmp2->value))
 				{
 					push(&tmp2, &tmp1);
 					write(1, "pb\n", 3);
+				}
+				else if (tmp1->next && !tmp1->next->next && tmp1->value < last->value)
+				{
+					swap(tmp1);
+					write(1, "sa\n", 3);
 				}
 			}
 		}
