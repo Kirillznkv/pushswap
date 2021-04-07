@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 21:06:23 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/07 00:37:55 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/07 23:31:09 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct		s_list
 void		add_back(t_list **lst, t_list *new);
 void		add_front(t_list **lst, t_list *new);
 t_list		*lstnew(int value);
+t_list		*put_last_list(t_list *tmp);
 /*-------------------------------utils----------------------------------------*/
 int			equally_str(char *s1, const char *s2);
 int			ft_atoi(char *str);
