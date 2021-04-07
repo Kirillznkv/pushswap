@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 00:05:21 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/08 00:42:48 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/08 01:21:54 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,11 @@ void		swap_100(t_list *tmp1, t_list *tmp2)
 				{
 					swap(tmp1);
 					write(1, "sa\n", 3);
+				}
+				else
+				{
+					reverse_rotate(&tmp1);
+					write(1, "rra\n", 4);
 				}
 			}
 		}
