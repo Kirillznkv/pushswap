@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 00:05:21 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/09 20:19:01 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/09 22:16:43 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,68 @@ int			check_list_ps(t_list *tmp1, t_list *tmp2)
 	return (0);
 }
 
-void		swap_3(t_list *tmp)
+void		swap_3(t_list **tmp)
 {
 	int		a;
 
-	a = tmp->value;
-	if (a < tmp->next->value && a < tmp->next->next->value)
-		write(1, "sa\nra\n", 11);
-	else if (a > tmp->next->value && a > tmp->next->next->value)
+	a = (*tmp)->value;
+	if (a < (*tmp)->next->value && a < (*tmp)->next->next->value)
 	{
-		rotate(&tmp);
-		if (check_list_ps(tmp, NULL))
-			write(1, "ra\n", 4);
-		else
-			write(1, "ra\nsa\n", 7);
+		swap(*tmp);
+		rotate(tmp);
+		write(1, "sa\nra\n", 11);
 	}
-	else if (a > tmp->next->value)
+	else if (a > (*tmp)->next->value && a > (*tmp)->next->next->value)
+	{
+		rotate(tmp);
+		if (check_list_ps(*tmp, NULL))
+		{
+			rotate(tmp);
+			write(1, "ra\n", 4);
+		}
+		else
+		{
+			rotate(tmp);
+			swap(*tmp);
+			write(1, "ra\nsa\n", 7);
+		}
+	}
+	else if (a > (*tmp)->next->value)
+	{
+		swap(*tmp);
 		write(1, "sa\n", 4);
-	else if (a < tmp->next->value && a != tmp->next->next->value)
+	}
+	else if (a < (*tmp)->next->value && a != (*tmp)->next->next->value)
+	{
+		reverse_rotate(tmp);
 		write(1, "rra\n", 5);
+	}
 	else
 	{
 		printf("Error:\nПовторяющиеся аргументы\n");
 		exit(1);
 	}
+}
+
+int			second_stack(t_list *tmp, int i)
+{
+	if (i <= ft_lstsize(tmp) / 2)
+		return (i);
+	return (i - ft_lstsize(tmp));
+}
+
+int			first_stack(t_list *tmp, int value)
+{
+	
+}
+
+void		swap_5(t_list *tmp1, t_list *tmp2)
+{
+	push(&tmp2, &tmp1);
+	push(&tmp2, &tmp1);
+	write(1, "pb\npb\n", 6);
+	swap_3(&tmp1);
+
 }
 
 void		out(t_list *tmp)
@@ -184,109 +222,9 @@ int			find_min(t_list *tmp)
 	return (min_i);
 }
 
-void		swap_100_v2(t_list *tmp1, t_list *tmp2)
-{
-	int		n;
-
-	while (!check_list_ps(tmp1, tmp2))
-	{
-		n = find_min(tmp1);
-		if (n <= ft_lstsize(tmp1))
-		{
-			while (n-- > 0)
-			{
-				rotate(&tmp1);
-				write(1, "ra\n", 3);
-			}
-		}
-		else
-		{
-			n = ft_lstsize(tmp1) - n;
-			while (n-- > 0)
-			{
-				reverse_rotate(&tmp1);
-				write(1, "rra\n", 4);
-			}
-		}
-		if (!tmp1->next || bad_check_list_ps(tmp1, NULL))
-		{
-			while (tmp2)
-			{
-				push(&tmp1, &tmp2);
-				write(1, "pa\n", 3);
-			}
-		}
-		else
-		{
-			push(&tmp2, &tmp1);
-				write(1, "pb\n", 3);
-		}
-	}
-	printf("OK\n");
-}
-
 void		swap_100(t_list *tmp1, t_list *tmp2)
 {
-	t_list	*last;
 
-	while (!check_list_ps(tmp1, tmp2))
-	{
-		if (tmp1->next == NULL)
-		{
-			while (tmp2)
-			{
-				push(&tmp1, &tmp2);
-				write(1, "pa\n", 3);
-			}
-		}
-		else
-		{
-			last = put_last_list(tmp1);
-			if (last->value < tmp1->value && (tmp2 == NULL || last->value > tmp2->value))
-			{
-				reverse_rotate(&tmp1);
-				write(1, "rra\n", 4);
-			}
-			else if (last->value < tmp1->value)
-			{
-				while (tmp2 && last->value < tmp2->value)
-				{
-					push(&tmp1, &tmp2);
-					write(1, "pa\n", 3);
-				}
-				reverse_rotate(&tmp1);
-				write(1, "rra\n", 4);
-			}
-			else if (last->value > tmp1->value)
-			{
-				// if (tmp1->next && tmp1->next->value > tmp1->value && last->value < tmp1->next->value)
-				// {
-				// 	reverse_rotate(&tmp1);
-				// 	write(1, "rra\n", 4);
-				// 	swap(tmp1);
-				// 	write(1, "sa\n", 3);
-				// 	continue ;
-				// }
-				while (tmp1->next && tmp1->value < tmp1->next->value && tmp1->value < last->value && (!tmp2 || tmp1->value > tmp2->value))
-				{
-					push(&tmp2, &tmp1);
-					write(1, "pb\n", 3);
-				}
-				if (tmp1->value < last->value && (!tmp2 || tmp1->value > tmp2->value))
-				{
-					push(&tmp2, &tmp1);
-					write(1, "pb\n", 3);
-				}
-				else if (tmp1->next && !tmp1->next->next && tmp1->value < last->value)
-				{
-					swap(tmp1);
-					write(1, "sa\n", 3);
-				}
-				reverse_rotate(&tmp1);
-				write(1, "rra\n", 4);
-			}
-		}
-	}
 }
 
 /*-------------------------------main-----------------------------------------*/

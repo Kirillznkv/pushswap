@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 21:06:23 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/07 23:31:09 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/09 21:10:37 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 typedef struct		s_list
 {
 	int				value;
+	int				weight;
 	struct s_list	*prev;
 	struct s_list	*next;
 }					t_list;
