@@ -6,11 +6,14 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 00:05:21 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/09 22:16:43 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/12 19:29:49 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../push_swap.h"
+
+int			ft_lstsize(t_list *lst);////////////////////////////////////////////
+void		out(t_list *tmp);////////////////////////////////////////////
 
 int			check_list_ps(t_list *tmp1, t_list *tmp2)
 {
@@ -37,42 +40,56 @@ void		swap_3(t_list **tmp)
 {
 	int		a;
 
+	if(check_list_ps(*tmp, NULL))
+		return ;
 	a = (*tmp)->value;
 	if (a < (*tmp)->next->value && a < (*tmp)->next->next->value)
 	{
 		swap(*tmp);
 		rotate(tmp);
-		write(1, "sa\nra\n", 11);
+		write(1, "sa\nra\n", 6);
 	}
 	else if (a > (*tmp)->next->value && a > (*tmp)->next->next->value)
 	{
 		rotate(tmp);
-		if (check_list_ps(*tmp, NULL))
+		write(1, "ra\n", 3);
+		if (!check_list_ps(*tmp, NULL))
 		{
-			rotate(tmp);
-			write(1, "ra\n", 4);
-		}
-		else
-		{
-			rotate(tmp);
 			swap(*tmp);
-			write(1, "ra\nsa\n", 7);
+			write(1, "sa\n", 3);
 		}
 	}
 	else if (a > (*tmp)->next->value)
 	{
 		swap(*tmp);
-		write(1, "sa\n", 4);
+		write(1, "sa\n", 3);
 	}
 	else if (a < (*tmp)->next->value && a != (*tmp)->next->next->value)
 	{
 		reverse_rotate(tmp);
-		write(1, "rra\n", 5);
+		write(1, "rra\n", 4);
 	}
 	else
 	{
 		printf("Error:\nПовторяющиеся аргументы\n");
 		exit(1);
+	}
+}
+
+void		min_max(t_list *tmp, int *min, int *max)
+{
+	t_list	*beg;
+
+	*min = __INT32_MAX__;
+	*max = - __INT32_MAX__ - 1;
+	beg = tmp;
+	while (beg)
+	{
+		if (beg->value < *min)
+			*min = beg->value;
+		if (beg->value > *max)
+			*max = beg->value;
+		beg = beg->next;
 	}
 }
 
@@ -83,9 +100,52 @@ int			second_stack(t_list *tmp, int i)
 	return (i - ft_lstsize(tmp));
 }
 
-int			first_stack(t_list *tmp, int value)
+int			first_stack(t_list *tmp, int value, int min, int max)
 {
-	
+	t_list	*t;
+	int		i;
+
+	i = 0;
+	t = tmp;
+	if (value < min || value > max)
+	{
+		while (t && t->value != min)
+		{
+			t = t->next;
+			i++;
+		}
+		return (second_stack(tmp, i));
+	}
+	t = t->next;
+	i++;
+	while (t && !(t->value > value && t->prev->value < value))
+	{
+		t = t->next;
+		i++;
+	}
+	return (second_stack(tmp, i));
+}
+
+void		find_weights(t_list *tmp1, t_list *tmp2)
+{
+	t_list	*t1;
+	t_list	*t2;
+	int		min;
+	int		max;
+	int		i;
+
+
+	i = 0;
+	t1 = tmp1;
+	t2 = tmp2;
+	min_max(tmp1, &min, &max);
+	while (t2)
+	{
+		t2->weight_b = second_stack(tmp2, i);
+		t2->weight_a = first_stack(t1, t2->value, min, max);
+		t2 = t2->next;
+		i++;
+	}
 }
 
 void		swap_5(t_list *tmp1, t_list *tmp2)
@@ -94,7 +154,14 @@ void		swap_5(t_list *tmp1, t_list *tmp2)
 	push(&tmp2, &tmp1);
 	write(1, "pb\npb\n", 6);
 	swap_3(&tmp1);
-
+	find_weights(tmp1, tmp2);
+	int i = 0;
+	while (tmp2)
+	{
+		printf("(%d) a = %d b = %d\n", i, tmp2->weight_a, tmp2->weight_b);
+		tmp2 = tmp2->next;
+		i++;
+	}
 }
 
 void		out(t_list *tmp)
@@ -224,7 +291,7 @@ int			find_min(t_list *tmp)
 
 void		swap_100(t_list *tmp1, t_list *tmp2)
 {
-
+	;
 }
 
 /*-------------------------------main-----------------------------------------*/
@@ -237,7 +304,11 @@ void		push_swap(t_list *tmp1, t_list *tmp2, int n)
 	else if (n == 2)
 		write(1, "sa\n", 4);
 	else if (n == 3)
-		swap_3(tmp1);
+		swap_3(&tmp1);
+	else if (n == 5)
+	{
+		swap_5(tmp1, tmp2);
+	}
 	else
 		swap_100(tmp1, tmp2);
 }
