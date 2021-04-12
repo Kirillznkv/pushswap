@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 00:05:21 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/12 19:29:49 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/12 20:05:08 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,14 +116,28 @@ int			first_stack(t_list *tmp, int value, int min, int max)
 		}
 		return (second_stack(tmp, i));
 	}
-	t = t->next;
-	i++;
+	t->prev = put_last_list(t);
 	while (t && !(t->value > value && t->prev->value < value))
 	{
 		t = t->next;
 		i++;
 	}
+	tmp->prev = NULL;
 	return (second_stack(tmp, i));
+}
+
+int			ft_max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
+
+int			ft_min(int a, int b)
+{
+	if (a < b)
+		return (a);
+	return (b);
 }
 
 void		find_weights(t_list *tmp1, t_list *tmp2)
@@ -143,6 +157,12 @@ void		find_weights(t_list *tmp1, t_list *tmp2)
 	{
 		t2->weight_b = second_stack(tmp2, i);
 		t2->weight_a = first_stack(t1, t2->value, min, max);
+		if (t2->weight_b > 0 && t2->weight_a > 0)
+			t2->weight = ft_max(t2->weight_b, t2->weight_a);
+		else if (t2->weight_b < 0 && t2->weight_a < 0)
+			t2->weight = ft_min(t2->weight_b, t2->weight_a);
+		else
+			t2->weight = abs(t2->weight_b) + abs(t2->weight_a);
 		t2 = t2->next;
 		i++;
 	}
@@ -158,7 +178,7 @@ void		swap_5(t_list *tmp1, t_list *tmp2)
 	int i = 0;
 	while (tmp2)
 	{
-		printf("(%d) a = %d b = %d\n", i, tmp2->weight_a, tmp2->weight_b);
+		printf("(%d) a = %d b = %d all = %d\n", i, tmp2->weight_a, tmp2->weight_b, tmp2->weight);
 		tmp2 = tmp2->next;
 		i++;
 	}

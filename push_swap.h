@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 21:06:23 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/12 17:35:19 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/12 20:06:01 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,18 @@
 # include "stdio.h"
 # include "stdlib.h"
 # include "unistd.h"
+# include "math.h"///////////
+///////////////
+// Убрать abs
+// Проверить надобность дублируешего адреса листа
+///////////////
 /*-------------------------------structures-----------------------------------*/
 typedef struct		s_list
 {
 	int				value;
 	int				weight_b;
 	int				weight_a;
+	int				weight;
 	struct s_list	*prev;
 	struct s_list	*next;
 }					t_list;
