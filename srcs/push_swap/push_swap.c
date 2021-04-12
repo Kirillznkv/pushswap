@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 00:05:21 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/12 20:55:33 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/12 21:48:12 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ void		min_max(t_list *tmp, int *min, int *max)
 
 int			second_stack(t_list *tmp, int i)
 {
-	if (i <= ft_lstsize(tmp) / 2)
-		return (i);
-	return (i - ft_lstsize(tmp));
+	if ((i % ft_lstsize(tmp)) <= (ft_lstsize(tmp) / 2))
+		return (i % ft_lstsize(tmp));
+	return ((i % ft_lstsize(tmp)) - ft_lstsize(tmp));
 }
 
 int			first_stack(t_list *tmp, int value, int min, int max)
@@ -268,6 +268,7 @@ void		swap_5(t_list *tmp1, t_list *tmp2)
 		find_weights(tmp1, tmp2);
 		commands_for_weight(&tmp1, &tmp2, min);
 		push(&tmp1, &tmp2);
+		write(1, "pa\n", 3);
 	}
 	finish_shift(&tmp1);
 }
