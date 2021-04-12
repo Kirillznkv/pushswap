@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 00:05:21 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/12 20:27:08 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/12 20:49:59 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,11 +184,8 @@ t_list		*min_weight(t_list *tmp2)
 	return (save);
 }
 
-void		commands_for_weight(t_list **tmp1, t_list **tmp2)
+void		commands_for_weight(t_list **tmp1, t_list **tmp2, t_list *min)
 {
-	t_list	*min;
-
-	min = min_weight(*tmp2);
 	while (min->weight_a > 0 && min->weight_b > 0)
 	{
 		rotate(tmp1);
@@ -235,28 +232,45 @@ void		commands_for_weight(t_list **tmp1, t_list **tmp2)
 			write(1, "rra\n", 4);
 		}
 	}
-	push(tmp1, tmp2);
+}
+
+void		finish_shift(t_list **tmp)
+{
+	t_list	*save;
+	int		min;
+	int		max;
+	int		i;
+
+	i = 0;
+	save = *tmp;
+	min_max(*tmp, &min, &max);
+	while (save->value != min)
+	{
+		save = save->next;
+		i++;
+	}
+	save->weight_a = second_stack(*tmp, i);
+	save->weight_b = 0;
+	commands_for_weight(tmp, NULL, save);
 }
 
 void		swap_5(t_list *tmp1, t_list *tmp2)
 {
+	t_list	*min;
+
 	push(&tmp2, &tmp1);
 	push(&tmp2, &tmp1);
 	write(1, "pb\npb\n", 6);
 	swap_3(&tmp1);
 	while (tmp2)
 	{
+		min = min_weight(tmp2);
 		find_weights(tmp1, tmp2);
-		commands_for_weight(&tmp1, &tmp2);
+		commands_for_weight(&tmp1, &tmp2, min);
+		push(&tmp1, &tmp2);
 	}
+	finish_shift(&tmp1);
 	out(tmp1);
-	// int i = 0;
-	// while (tmp2)
-	// {
-	// 	printf("(%d) a = %d b = %d all = %d\n", i, tmp2->weight_a, tmp2->weight_b, tmp2->weight);
-	// 	tmp2 = tmp2->next;
-	// 	i++;
-	// }
 }
 
 void		out(t_list *tmp)
