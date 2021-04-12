@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 00:05:21 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/12 20:49:59 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/12 20:55:33 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,7 +270,6 @@ void		swap_5(t_list *tmp1, t_list *tmp2)
 		push(&tmp1, &tmp2);
 	}
 	finish_shift(&tmp1);
-	out(tmp1);
 }
 
 void		out(t_list *tmp)
@@ -283,83 +282,7 @@ void		out(t_list *tmp)
 	printf("\n------------------------------------\n");
 }
 
-void		swap_100_2000(t_list *tmp1, t_list *tmp2)
-{
-	t_list	*last;
-
-	while (!check_list_ps(tmp1, tmp2))
-	{
-		if (tmp1->next == NULL)
-		{
-			while (tmp2)
-			{
-				push(&tmp1, &tmp2);
-				write(1, "pa\n", 3);
-			}
-		}
-		else
-		{
-			last = put_last_list(tmp1);
-			if (last->value < tmp1->value && (tmp2 == NULL || last->value > tmp2->value))
-			{
-				reverse_rotate(&tmp1);
-				write(1, "rra\n", 4);
-			}
-			else if (last->value < tmp1->value)
-			{
-				while (tmp2 && last->value < tmp2->value)
-				{
-					push(&tmp1, &tmp2);
-					write(1, "pa\n", 3);
-				}
-				reverse_rotate(&tmp1);
-				write(1, "rra\n", 4);
-			}
-			else if (last->value > tmp1->value)
-			{
-				while (tmp1->next && tmp1->value < tmp1->next->value && tmp1->value < last->value && (!tmp2 || tmp1->value > tmp2->value))
-				{
-					push(&tmp2, &tmp1);
-					write(1, "pb\n", 3);
-				}
-				if (tmp1->value < last->value && (!tmp2 || tmp1->value > tmp2->value))
-				{
-					push(&tmp2, &tmp1);
-					write(1, "pb\n", 3);
-				}
-				else if (tmp1->next && !tmp1->next->next && tmp1->value < last->value)
-				{
-					swap(tmp1);
-					write(1, "sa\n", 3);
-				}
-				reverse_rotate(&tmp1);
-				write(1, "rra\n", 4);
-			}
-		}
-	}
-}
-
 /*-------------------------------FUCK-----------------------------------------*/
-int			bad_check_list_ps(t_list *tmp1, t_list *tmp2)
-{
-	t_list		*beg;
-
-	beg = tmp1;
-	while (beg && beg->next)
-	{
-		if (beg->value == beg->next->value)
-		{
-			printf("Error:\nПовторяющиеся аргументы\n");
-			exit(1);
-		}
-		if (beg->value < beg->next->value)
-			return (0);
-		beg = beg->next;
-	}
-	if (tmp2 == NULL)
-		return (1);
-	return (0);
-}
 
 int			ft_lstsize(t_list *lst)
 {
@@ -376,31 +299,14 @@ int			ft_lstsize(t_list *lst)
 	return (size);
 }
 
-int			find_min(t_list *tmp)
+void		swap_100(t_list *tmp1, t_list *tmp2, int n)
 {
-	int		min;
-	int		min_i;
-	int		i;
-
-	i = 0;
-	min_i = -1;
-	min = __INT32_MAX__;
-	while (tmp)
+	while (n-- > 5)
 	{
-		if (tmp->value < min)
-		{
-			min = tmp->value;
-			min_i = i;
-		}
-		tmp = tmp->next;
-		i++;
+		push(&tmp2, &tmp1);
+		write(1, "pb\n", 3);
 	}
-	return (min_i);
-}
-
-void		swap_100(t_list *tmp1, t_list *tmp2)
-{
-	;
+	swap_5(tmp1, tmp2);
 }
 
 /*-------------------------------main-----------------------------------------*/
@@ -419,5 +325,5 @@ void		push_swap(t_list *tmp1, t_list *tmp2, int n)
 		swap_5(tmp1, tmp2);
 	}
 	else
-		swap_100(tmp1, tmp2);
+		swap_100(tmp1, tmp2, n);
 }
