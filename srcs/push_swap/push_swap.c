@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 00:05:21 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/12 20:05:08 by kshanti          ###   ########.fr       */
+/*   Updated: 2021/04/12 20:27:08 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,20 +168,95 @@ void		find_weights(t_list *tmp1, t_list *tmp2)
 	}
 }
 
+t_list		*min_weight(t_list *tmp2)
+{
+	t_list	*save;
+	t_list	*t2;
+
+	t2 = tmp2;
+	save = tmp2;
+	while (t2)
+	{
+		if (t2->weight < save->weight)
+			save = t2;
+		t2 = t2->next;
+	}
+	return (save);
+}
+
+void		commands_for_weight(t_list **tmp1, t_list **tmp2)
+{
+	t_list	*min;
+
+	min = min_weight(*tmp2);
+	while (min->weight_a > 0 && min->weight_b > 0)
+	{
+		rotate(tmp1);
+		rotate(tmp2);
+		min->weight_a--;
+		min->weight_b--;
+		write(1, "rr\n", 3);
+	}
+	while (min->weight_a < 0 && min->weight_b < 0)
+	{
+		reverse_rotate(tmp1);
+		reverse_rotate(tmp2);
+		min->weight_a++;
+		min->weight_b++;
+		write(1, "rrr\n", 4);
+	}
+	while (min->weight_b != 0)
+	{
+		if (min->weight_b > 0)
+		{
+			rotate(tmp2);
+			min->weight_b--;
+			write(1, "rb\n", 3);
+		}
+		else
+		{
+			reverse_rotate(tmp2);
+			min->weight_b++;
+			write(1, "rrb\n", 4);
+		}
+	}
+	while (min->weight_a != 0)
+	{
+		if (min->weight_a > 0)
+		{
+			rotate(tmp1);
+			min->weight_a--;
+			write(1, "ra\n", 3);
+		}
+		else
+		{
+			reverse_rotate(tmp1);
+			min->weight_a++;
+			write(1, "rra\n", 4);
+		}
+	}
+	push(tmp1, tmp2);
+}
+
 void		swap_5(t_list *tmp1, t_list *tmp2)
 {
 	push(&tmp2, &tmp1);
 	push(&tmp2, &tmp1);
 	write(1, "pb\npb\n", 6);
 	swap_3(&tmp1);
-	find_weights(tmp1, tmp2);
-	int i = 0;
 	while (tmp2)
 	{
-		printf("(%d) a = %d b = %d all = %d\n", i, tmp2->weight_a, tmp2->weight_b, tmp2->weight);
-		tmp2 = tmp2->next;
-		i++;
+		find_weights(tmp1, tmp2);
+		commands_for_weight(&tmp1, &tmp2);
 	}
+	out(tmp1);
+	// int i = 0;
+	// while (tmp2)
+	// {
+	// 	printf("(%d) a = %d b = %d all = %d\n", i, tmp2->weight_a, tmp2->weight_b, tmp2->weight);
+	// 	tmp2 = tmp2->next;
+	// 	i++;
+	// }
 }
 
 void		out(t_list *tmp)
