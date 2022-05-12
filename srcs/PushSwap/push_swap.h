@@ -6,7 +6,7 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 21:06:23 by kshanti           #+#    #+#             */
-/*   Updated: 2022/05/12 23:36:16 by kshanti          ###   ########.fr       */
+/*   Updated: 2022/05/13 01:50:31 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,12 @@ char		*ft_strdup(const char *s);
 int			ft_isdigit(int c);
 int			is_valid_elem(char *str);
 void		add_elem(t_stack **tmp, int elem);
+/*-------------------------------checkers-------------------------------------*/
+int			is_sorted(t_node *stacks);
+/*-------------------------------sort-----------------------------------------*/
+void		ft_sort(t_node *stacks, int n);
+void		sort_3(t_node *stacks);
+void		sort_5(t_node *stacks);
+void		mega_sort(t_node *stacks);
 
 #endif

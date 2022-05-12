@@ -52,20 +52,6 @@ int main(int argc, char **argv)
 		write(2, "Error arguments\n", 17);
 		return (1);
 	}
-	output(&stacks);
-
-	pb(&stacks);
-	pb(&stacks);
-	pb(&stacks);
-	printf("\n");
-	output(&stacks);
-
-	ss(&stacks);
-	printf("\n");
-	output(&stacks);
-
-	rr(&stacks);
-	printf("\n");
-	output(&stacks);
+	ft_sort(&stacks, argc - 1);
 	return (0);
 }
