@@ -50,6 +50,7 @@ void	push(t_stack **stack_in, t_stack **stack_out)
 		tmp->prev = (*stack_out)->prev;
 		(*stack_out)->prev->next = tmp;
 		(*stack_out)->prev = tmp;
+		*stack_out = tmp;
 	}
 	else
 	{
@@ -57,6 +58,7 @@ void	push(t_stack **stack_in, t_stack **stack_out)
 		tmp->prev = *stack_out;
 		(*stack_out)->next = tmp;
 		(*stack_out)->prev = tmp;
+		*stack_out = tmp;
 	}
 }
 

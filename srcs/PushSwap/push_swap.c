@@ -19,22 +19,22 @@ static void output(t_node *stacks)//del
 {
 	printf("Stack a: ");
 	t_stack *tmp = stacks->a;
-	if (tmp && tmp->prev)
-		tmp->prev->next = NULL;
-	while (tmp )
+	int flag = 1;
+	while (tmp && (flag || tmp != stacks->a))
 	{
 		printf("%d ", tmp->value);
 		tmp = tmp->next;
+		flag = 0;
 	}
 	printf("\n");
 	printf("Stack b: ");
 	tmp = stacks->b;
-	if (tmp && tmp->prev)
-		tmp->prev->next = NULL;
-	while (tmp)
+	flag = 1;
+	while (tmp && (flag || tmp != stacks->b))
 	{
 		printf("%d ", tmp->value);
 		tmp = tmp->next;
+		flag = 0;
 	}
 	printf("\n");
 }
@@ -52,6 +52,20 @@ int main(int argc, char **argv)
 		write(2, "Error arguments\n", 17);
 		return (1);
 	}
+	output(&stacks);
+
+	pb(&stacks);
+	pb(&stacks);
+	pb(&stacks);
+	printf("\n");
+	output(&stacks);
+
+	ss(&stacks);
+	printf("\n");
+	output(&stacks);
+
+	rr(&stacks);
+	printf("\n");
 	output(&stacks);
 	return (0);
 }
