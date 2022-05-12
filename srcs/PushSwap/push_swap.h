@@ -6,14 +6,14 @@
 /*   By: kshanti <kshanti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 21:06:23 by kshanti           #+#    #+#             */
-/*   Updated: 2021/04/12 20:46:52 by kshanti          ###   ########.fr       */
+/*   Updated: 2022/05/12 23:36:16 by kshanti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include "stdio.h"
+# include "stdio.h"//del
 # include "stdlib.h"
 # include "unistd.h"
 # include "math.h"///////////
@@ -23,41 +23,44 @@
 // Написать проверку на одинаковые значения
 ///////////////
 /*-------------------------------structures-----------------------------------*/
-typedef struct		s_list
+typedef struct		s_stack
 {
 	int				value;
-	int				weight_b;
-	int				weight_a;
-	int				weight;
-	struct s_list	*prev;
-	struct s_list	*next;
-}					t_list;
-/*-------------------------------list-----------------------------------------*/
-void		add_back(t_list **lst, t_list *new);
-void		add_front(t_list **lst, t_list *new);
-t_list		*lstnew(int value);
-t_list		*put_last_list(t_list *tmp);
-/*-------------------------------utils----------------------------------------*/
-int			equally_str(char *s1, const char *s2);
+	struct s_stack	*prev;
+	struct s_stack	*next;
+}					t_stack;
+
+typedef struct		s_node
+{
+	struct s_stack	*a;
+	struct s_stack	*b;
+}					t_node;
+/*-------------------------------commands-------------------------------------*/
+void		sa(t_node *node);
+void		sb(t_node *node);
+void		ss(t_node *node);
+void		pa(t_node *node);
+void		pb(t_node *node);
+void		ra(t_node *node);
+void		rb(t_node *node);
+void		rr(t_node *node);
+void		rra(t_node *node);
+void		rrb(t_node *node);
+void		rrr(t_node *node);
+/*-------------------------------command_utils--------------------------------*/
+void		swap(t_stack *stack);
+void		push(t_stack **stack_in, t_stack **stack_out);
+void		rotate(t_stack **stack);
+void		reverse_rotate(t_stack **stack);
+/*-------------------------------base_utils-----------------------------------*/
 int			ft_atoi(char *str);
-int			ft_isdigit(int c);
-int			nicelst(char *str, int *value);
-t_list		*init(char **argv, int n);
-/*-------------------------------utils2---------------------------------------*/
 size_t		ft_strlen(const char *str);
+size_t		ft_strlcat(char *dst, const char *src, size_t size);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strdup(const char *s);
-/*-------------------------------commands-------------------------------------*/
-void		swap(t_list *tmp);
-void		push(t_list **t1, t_list **t2);
-void		rotate(t_list **tmp);
-void		reverse_rotate(t_list **tmp);
-/*-------------------------------checker--------------------------------------*/
-int			execute_command(t_list **tmp1, t_list **tmp2, char *b);
-void		check_list(t_list *tmp1, t_list *tmp2);
-int			checkerror(char *buf, int i);
-void		checker(t_list *tmp1, t_list *tmp2);
-/*-------------------------------push_swap------------------------------------*/
-void		push_swap(t_list *tmp1, t_list *tmp2, int n);
+/*-------------------------------parse_utils----------------------------------*/
+int			ft_isdigit(int c);
+int			is_valid_elem(char *str);
+void		add_elem(t_stack **tmp, int elem);
 
 #endif
