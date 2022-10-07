@@ -5,21 +5,21 @@ NAME_B = checker
 SRC = push_swap.c \
 		big_sort.c \
 		lil_sort.c \
-		count_steps.c \
+		count_steps.c
 
 SRC_B = ./checker_bonus/checker.c \
 		./checker_bonus/get_next_line.c \
-		./checker_bonus/get_next_line_utils.c \
+		./checker_bonus/get_next_line_utils.c
 
-SRC_ADD = init_stack.c \
-		create_array.c \
-        create_list.c \
-		sort_and_insert.c \
-		check_arguments.c \
-		search.c \
-		handlers.c \
-		commands1.c \
-        commands2.c \
+SRC_ADD = ./utils/init_stack.c \
+		./utils/create_array.c \
+        ./utils/create_list.c \
+		./utils/sort_and_insert.c \
+		./utils/check_arguments.c \
+		./utils/search.c \
+		./utils/handlers.c \
+		./utils/commands1.c \
+        ./utils/commands2.c
 
 FLAGS = -Wall -Wextra -Werror
 OBJ = $(SRC:%.c=%.o)
