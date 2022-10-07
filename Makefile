@@ -1,42 +1,66 @@
-NAME				=	push_swap
 
-DIRECTORY_SOURCE	=	srcs
+NAME = push_swap
+NAME_B = checker
 
-FILES_SOURCE		=	srcs/PushSwap/push_swap.c \
-						srcs/PushSwap/commands/command_utils.c \
-						srcs/PushSwap/commands/push_and_swap.c \
-						srcs/PushSwap/commands/reverse_rotate.c \
-						srcs/PushSwap/commands/rotate.c \
-						srcs/PushSwap/utils/base_utils.c \
-						srcs/PushSwap/utils/parse_input.c
+SRC = push_swap.c \
+		big_sort.c \
+		lil_sort.c \
+		count_steps.c \
 
-O_FILE = $(FILES_SOURCE:.c=.o)
+SRC_B = ./checker_bonus/checker.c \
+		./checker_bonus/get_next_line.c \
+		./checker_bonus/get_next_line_utils.c \
 
-COMPILE				=	gcc
-COMPILATION_FLAG	=	-Wall -Wextra -Werror
+SRC_ADD = init_stack.c \
+		create_array.c \
+        create_list.c \
+		sort_and_insert.c \
+		check_arguments.c \
+		search.c \
+		handlers.c \
+		commands1.c \
+        commands2.c \
 
-all: $(NAME)
+FLAGS = -Wall -Wextra -Werror
+OBJ = $(SRC:%.c=%.o)
+OBJ_B = $(SRC_B:%.c=%.o)
+OBJ_ADD = $(SRC_ADD:%.c=%.o)
+HEADER = push_swap.h
+HEADER_B = ./checker_bonus/checker.h
+LIB = ./lib -lft
+LINK_LIB = -L $(LIB)
 
-%.o: %.c
-	@printf "\e[33m"
-	@printf "Compile\t$< -> $@\n"
-	mkdir -p $(dir $@)
-	$(COMPILE) $(COMPILATION_FLAG) -c $< -o $@
+all : $(NAME) $(SRC)
 
-$(NAME): $(O_FILE)
-	@printf "\e[32m"
-	@printf "Build\t$@\n"
-	$(COMPILE) -o $@ $(FILES_SOURCE)
+$(NAME) : $(OBJ) $(OBJ_ADD) $(HEADER)
+	make -C $(LIB)
+	make bonus -C $(LIB)
+	gcc $(FLAGS) $(OBJ) $(OBJ_ADD) $(LINK_LIB) -o $@
 
-clean:
-	@printf "\e[31m"
-	@printf "Remove\n"
-	rm -rf $(O_FILE)
+$(OBJ) : %.o : %.c
+	gcc $(FLAGS) -c  $< -o $@
+$(OBJ_ADD) : %.o : %.c
+	gcc $(FLAGS) -c  $< -o $@
 
-fclean: clean
-	@printf "Remove\t$(NAME)\n"
+bonus : $(OBJ_B) $(OBJ_ADD) $(HEADER_B)
+		make -C $(LIB)
+		make bonus -C $(LIB)
+		gcc $(FLAGS) $(OBJ_B) $(OBJ_ADD) $(LINK_LIB) -o $(NAME_B)
+
+$(OBJ_B) :%.o : %.c
+	gcc $(FLAGS) -c $< -o $@
+
+clean :
+	rm -f $(OBJ)  $(OBJ_B) $(OBJ_ADD)
+	make clean -C $(LIB)
+
+fclean : clean
 	rm -f $(NAME)
+	rm -f $(NAME_B)
+	make fclean -C $(LIB)
 
-re: fclean all
+re :  fclean all
 
-.PHONY: all clean fclean re
+re_bonus : fclean bonus
+
+.PHONY : all clean fclean re bonus
